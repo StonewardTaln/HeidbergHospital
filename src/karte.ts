@@ -1,6 +1,7 @@
 /// <reference types="@workadventure/iframe-api-typings" />
 
 import { bootstrapExtra } from "@workadventure/scripting-api-extra";
+import { Popup } from "@workadventure/iframe-api-typings";
 
 console.log('Script started successfully');
 
@@ -24,6 +25,25 @@ WA.onInit().then(() => {
 function ncp1() {
   WA.room.area.onEnter('npc1').subscribe(() => {
     console.log("entered npc1 zone");
+
+    let popUp: Popup;
+
+    popUp = WA.ui.openPopup("popup1", 'Hi, willst du mit mir reden?', [{
+      label: "Nein!",
+        className: "primary",
+        callback: (popup) => {
+            // Close the popup when the "Close" button is pressed.
+            popup.close();
+        }
+    },
+    {
+      label: "Nope",
+        className: "primary",
+        callback: (popup) => {
+            // Close the popup when the "Close" button is pressed.
+            popup.close();
+        }
+    }]);
   })
   
 

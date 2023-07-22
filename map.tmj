@@ -209,15 +209,15 @@
                  "y":474
                 }, 
                 {
-                 "height":289,
+                 "height":106,
                  "id":5,
-                 "name":"popup",
+                 "name":"popup1",
                  "rotation":0,
                  "type":"",
                  "visible":true,
                  "width":326,
                  "x":10,
-                 "y":172
+                 "y":355
                 }],
          "opacity":1,
          "type":"objectgroup",
