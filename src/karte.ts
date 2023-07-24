@@ -14,6 +14,9 @@ WA.onInit().then(() => {
     //code here
     console.log('test1');
     showScore();
+    clock();
+
+    //old/remove
     scoreAdd(3);
     ncp1();
 
@@ -27,6 +30,17 @@ WA.onInit().then(() => {
     }).catch(e => console.error(e));
 
 }).catch(e => console.error(e));
+
+function clock() {
+  WA.room.area.onEnter('zoneClock').subscribe(() => {
+    console.log('test1');
+    const today = new Date();
+    const time = today.getHours() + ":" + today.getMinutes();
+    currentPopup = WA.ui.openPopup("popupClock", "Es ist " + time, []);
+})
+
+WA.room.area.onLeave('zoneClock').subscribe(closePopup)
+}
 
 function showScore() {
   //displays current Score as a popup
