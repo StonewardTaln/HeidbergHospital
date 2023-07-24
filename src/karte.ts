@@ -13,7 +13,12 @@ WA.onInit().then(() => {
     
     //code here
     console.log('test1');
+    scoreAdd(3);
     ncp1();
+
+    //variables
+    setVariables();
+
 
     // The line below bootstraps the Scripting API Extra library that adds a number of advanced properties/features to WorkAdventure
     bootstrapExtra().then(() => {
@@ -24,12 +29,13 @@ WA.onInit().then(() => {
 
 function ncp1() {
   WA.room.area.onEnter('npc1').subscribe(() => {
+    
     console.log("entered npc1 zone");
 
     let popUp: Popup;
 
-    popUp = WA.ui.openPopup("popup1", 'Hi, willst du mit mir reden?', [{
-      label: "Nein!",
+    popUp = WA.ui.openPopup("popup1", 'Willkommen im Hospital, was kann ich für Sie tun?', [{
+      label: "Hallo, ich bin wegen der Prozessanalyse hier.",
         className: "primary",
         callback: (popup) => {
             // Close the popup when the "Close" button is pressed.
@@ -49,11 +55,42 @@ function ncp1() {
 
 }
 
-function closePopup(){
+function setVariables() {
+  //sets the initial values/variables as private, world, persitent
+  //https://workadventu.re/map-building/api-player.md for public, room, time to live
+  WA.player.state.score = 0;
+}
+
+function scoreAdd(numberOfPoints: number) {
+  var myVariable = WA.player.state.score;
+    if (typeof myVariable == "number") {
+      WA.player.state.score = myVariable + numberOfPoints;
+      console.log(WA.player.state.score + " = new Score");
+    } else {
+      console.log("Error: WA.player.state.score is not a number.");
+    }
+}
+
+function closePopup() {
     if (currentPopup !== undefined) {
         currentPopup.close();
         currentPopup = undefined;
     }
+}
+
+class NPC {
+  name: string;
+  opinion: number;
+
+  constructor(myName: string) {
+    this.name = myName;
+    this.opinion = 0;
+  }
+
+  recognizeOneOfUs() {
+    
+    this.opinion += 20;
+  }
 }
 
 export {};
