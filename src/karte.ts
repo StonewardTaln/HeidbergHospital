@@ -32,14 +32,14 @@ WA.onInit().then(() => {
 }).catch(e => console.error(e));
 
 function clock() {
+  //gets and show the time at the reception
   WA.room.area.onEnter('zoneClock').subscribe(() => {
-    console.log('test1');
     const today = new Date();
     const time = today.getHours() + ":" + today.getMinutes();
     currentPopup = WA.ui.openPopup("popupClock", "Es ist " + time, []);
-})
+  })
 
-WA.room.area.onLeave('zoneClock').subscribe(closePopup)
+  WA.room.area.onLeave('zoneClock').subscribe(closePopup)
 }
 
 function showScore() {
@@ -55,43 +55,124 @@ function ncp1() {
     
     console.log("entered npc1 zone");
 
-    let popUp: Popup;
 
-    popUp = WA.ui.openPopup("popup1", 'Willkommen im Hospital, was kann ich für Sie tun?', [{
-      label: "Hallo, ich bin wegen der Prozessanalyse hier.",
+    currentPopup = WA.ui.openPopup("popup1", 'Willkommen im Hospital, wie kann ich Ihnen weiterhelfen?', [{
+      label: "Hallo, mein Name ist " + WA.player.name + ". Ich bin für die Prozessanalyse hier.",
         className: "primary",
-        callback: (popup) => {
+        callback: (currentPopup) => {
             // Close the popup when the "Close" button is pressed.
-            popup.close();
-        }
-    },
-    {
-      label: "Nope",
-        className: "primary",
-        callback: (popup) => {
-            // Close the popup when the "Close" button is pressed.
-            popup.close();
+            currentPopup.close();
+
+            dialogChooseRole();
         }
     }]);
+
+    
   })
   
 
+}
+
+function dialogLeftWay() {
+//toDo
+}
+
+function dialogRightWay() {
+  //toDo
+}
+
+function dialogAskWay() {
+  currentPopup = WA.ui.openPopup("popup1", 'Wie aufregend!', [{
+    label: "Wo finde ich meine Kollegen?",
+      className: "primary",
+      callback: (currentPopup) => {
+                // Close the popup when the "Close" button is pressed.
+          currentPopup.close();
+          dialogLeftWay();
+      }
+  },
+  {
+    label: "Wer ist alles am Schreiben eines Arztbriefs beteiligt?",
+      className: "primary",
+      callback: (currentPopup) => {
+          // Close the popup when the "Close" button is pressed.
+          currentPopup.close();
+          dialogRightWay();
+      }
+  }]);
+}
+
+function dialogChooseRole() {
+  currentPopup = WA.ui.openPopup("popup1", 'Sehr schön. In welchem Bereich arbeiten Sie?', [{
+    label: "Informatik",
+      className: "primary",
+      callback: (currentPopup) => {
+        setRole("inf");
+
+          // Close the popup when the "Close" button is pressed.
+          currentPopup.close();
+          dialogAskWay();
+      }
+  },
+  {
+    label: "Medizin",
+      className: "primary",
+      callback: (currentPopup) => {
+        setRole("med");
+
+          // Close the popup when the "Close" button is pressed.
+          currentPopup.close();
+          dialogAskWay();
+      }
+  }]);
+}
+
+function copyspeicher() {
+  //Ablage, nicht ausführen
+
+  currentPopup = WA.ui.openPopup("popup1", 'Willkommen im Hospital, wie kann ich Ihnen weiterhelfen?', [{
+    label: "Hallo, mein Name ist " + WA.player.name + ". ich bin wegen der Prozessanalyse hier.",
+      className: "primary",
+      callback: (currentPopup) => {
+          // Close the popup when the "Close" button is pressed.
+          currentPopup.close();
+      }
+  },
+  {
+    label: "Nope",
+      className: "primary",
+      callback: (currentPopup) => {
+          // Close the popup when the "Close" button is pressed.
+          currentPopup.close();
+      }
+  }]);
 }
 
 function setVariables() {
   //sets the initial values/variables as private, world, persitent
   //https://workadventu.re/map-building/api-player.md for public, room, time to live
   WA.player.state.score = 0;
+  WA.player.state.role = "noRole";
+}
+
+function setRole(newRole: string) {
+  var myVariable = WA.player.state.role;
+  if (typeof myVariable == "string") {
+    WA.player.state.role = newRole;
+    console.log("New role: " + WA.player.state.role);
+  } else {
+    console.log("Error: WA.player.state.role is not a number.");
+  }
 }
 
 function scoreAdd(numberOfPoints: number) {
   var myVariable = WA.player.state.score;
-    if (typeof myVariable == "number") {
-      WA.player.state.score = myVariable + numberOfPoints;
-      console.log(WA.player.state.score + " = new Score");
-    } else {
-      console.log("Error: WA.player.state.score is not a number.");
-    }
+  if (typeof myVariable == "number") {
+  WA.player.state.score = myVariable + numberOfPoints;
+    console.log(WA.player.state.score + " = new Score");
+  } else {
+    console.log("Error: WA.player.state.score is not a number.");
+  }
 }
 
 function closePopup() {
@@ -101,6 +182,7 @@ function closePopup() {
     }
 }
 
+//idea:
 class NPC {
   name: string;
   opinion: number;
