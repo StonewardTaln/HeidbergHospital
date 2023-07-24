@@ -338,6 +338,28 @@
                  "width":184.666666666667,
                  "x":360.666666666667,
                  "y":534
+                }, 
+                {
+                 "height":58,
+                 "id":7,
+                 "name":"popupScore",
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":87,
+                 "x":612,
+                 "y":389.5
+                }, 
+                {
+                 "height":60.5,
+                 "id":8,
+                 "name":"zoneScore",
+                 "rotation":0,
+                 "type":"area",
+                 "visible":true,
+                 "width":98,
+                 "x":542,
+                 "y":479.5
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -439,7 +461,7 @@
          "y":0
         }],
  "nextlayerid":16,
- "nextobjectid":7,
+ "nextobjectid":9,
  "orientation":"orthogonal",
  "properties":[
         {

@@ -13,6 +13,7 @@ WA.onInit().then(() => {
     
     //code here
     console.log('test1');
+    showScore();
     scoreAdd(3);
     ncp1();
 
@@ -26,6 +27,14 @@ WA.onInit().then(() => {
     }).catch(e => console.error(e));
 
 }).catch(e => console.error(e));
+
+function showScore() {
+  //displays current Score as a popup
+  WA.room.area.onEnter('zoneScore').subscribe(() => {
+    //console.log(WA.player.name, ' entered score zone');
+    currentPopup = WA.ui.openPopup("popupScore", "Score: " + WA.player.state.score, []);
+  })
+}
 
 function ncp1() {
   WA.room.area.onEnter('npc1').subscribe(() => {
