@@ -17,6 +17,7 @@ WA.onInit().then(() => {
 
     
     ncp1();
+    npc2();
 
     //variables
     setVariables();
@@ -49,6 +50,43 @@ function showScore() {
 
   //closes popup when leaving zone
   WA.room.area.onLeave('zoneScore').subscribe(closePopup);
+}
+
+function npc2() {
+  let popClosedHand = false;
+
+  WA.room.area.onEnter('npc2').subscribe(() => {
+    console.log("enter Zone NPC2");
+
+    currentPopup = WA.ui.openPopup("popup2NPC", 'Wollen Sie den Punktestand zurücksetzen?', [{
+      label: "Nein",
+      className: "primary",
+      callback: (currentPopup) => {
+        // Close the popup when the "Close" button is pressed.
+        currentPopup.close();
+        popClosedHand = true;
+      }
+    },
+    {
+      label: "Ja",
+      className: "error",
+      callback: (currentPopup) => {
+        setVariables();
+        //toDo hasBeenSpokenTo = false;
+        //toDo popClosedHand = false;
+
+        // Close the popup when the "Close" button is pressed.
+        currentPopup.close();
+        popClosedHand = true;
+      }
+    }]);
+
+    WA.room.area.onLeave('npc2').subscribe(() => {
+      if (!popClosedHand) {
+        currentPopup.close();
+      }
+    })
+  })
 }
 
 function ncp1() {
