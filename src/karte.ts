@@ -1,7 +1,6 @@
 /// <reference types="@workadventure/iframe-api-typings" />
 
 import { bootstrapExtra } from "@workadventure/scripting-api-extra";
-import { Popup } from "@workadventure/iframe-api-typings";
 
 console.log('Script started successfully');
 
@@ -211,27 +210,6 @@ function dialogChooseRole() {
   }]);
 }
 
-function copyspeicher() {
-  //Ablage, nicht ausführen
-
-  currentPopup = WA.ui.openPopup("popup1", 'Willkommen im Hospital, wie kann ich Ihnen weiterhelfen?', [{
-    label: "Hallo, mein Name ist " + WA.player.name + ". ich bin wegen der Prozessanalyse hier.",
-    className: "primary",
-    callback: (currentPopup) => {
-      // Close the popup when the "Close" button is pressed.
-      currentPopup.close();
-    }
-  },
-  {
-    label: "Nope",
-    className: "primary",
-    callback: (currentPopup) => {
-      // Close the popup when the "Close" button is pressed.
-      currentPopup.close();
-    }
-  }]);
-}
-
 function setVariables() {
   //sets the initial values/variables as private, world, persitent
   //https://workadventu.re/map-building/api-player.md for public, room, time to live
@@ -265,22 +243,6 @@ function closePopup() {
         currentPopup.close();
         currentPopup = undefined;
     }
-}
-
-//idea:
-class NPC {
-  name: string;
-  opinion: number;
-
-  constructor(myName: string) {
-    this.name = myName;
-    this.opinion = 0;
-  }
-
-  recognizeOneOfUs() {
-    
-    this.opinion += 20;
-  }
 }
 
 export {};
